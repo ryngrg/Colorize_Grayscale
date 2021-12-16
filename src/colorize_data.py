@@ -10,9 +10,11 @@ from torchvision.transforms.functional import resize
 
 
 class ColorizeData(Dataset):
-    def __init__(self):
+    def __init__(self, filelists):
         # Initialize dataset, you may use a second dataset for validation if required
-        self.filenames = pd.read_csv("filenames.csv")
+        self.filenames = []
+        for f in filelists:
+            self.filenames += pd.read_csv(f, header=None)[0].to_list()
         self.data_dir = r"../data/"
         # Use the input transform to convert images to grayscale
         self.input_transform = T.Compose([T.ToTensor(),
@@ -27,9 +29,9 @@ class ColorizeData(Dataset):
     
     def __len__(self) -> int:
         # return Length of dataset
-        return self.filenames.shape[0]
+        return len(self.filenames)
     
-    def __getitem__(self, index: int) -> Tuple(torch.Tensor, torch.Tensor):
+    def __getitem__(self, index: int) -> Tuple[torch.Tensor, torch.Tensor]:
         # Return the input tensor and output tensor for training
         file = self.filenames[index]
         filepath = os.path.join(os.getcwd(), self.data_dir, file)
