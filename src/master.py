@@ -24,12 +24,16 @@ def infer(model_name, image_path):
 if __name__ == "__main__":
     trainer = Trainer()
 
+    # set trying to False to get final model trained on all data
     trying = True
 
     if trying:
         trainer.train(["train_files.csv"], "temp_model")
         print("Validation loss:", trainer.validate())
     else:
-        # trainer.train(["train_files.csv", "val_files.csv"], "final_model")
+        trainer.train(["train_files.csv", "val_files.csv"], "final_model")
+
+        # put image path for image you want to test the final model on
         image_path = r"../data/1000.jpg"
-        # infer("final_model", image_path)
+
+        infer("final_model", image_path)

@@ -34,7 +34,7 @@ class Trainer:
             for i, (X, Y) in enumerate(train_dataloader):
                 print(f'epoch {epoch+1}/{self.epochs}, step {i+1}/{iters_per_epoch}, inputs {X.shape}')
                 y_hat = model(X)
-                loss = criterion(y_hat, Y)
+                loss = torch.mul(criterion(y_hat, Y), self.batch_size)
                 print("\tloss:", loss.item())
                 loss.backward()
                 optimizer.step()

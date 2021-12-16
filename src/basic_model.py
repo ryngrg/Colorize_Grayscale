@@ -6,7 +6,6 @@ class Net(nn.Module):
     def __init__(self, input_size=256):
         super(Net, self).__init__()
 
-
         # ResNet - First layer accepts grayscale images,
         # and we take only the first few layers of ResNet for this task
         resnet = models.resnet18(num_classes=100)
